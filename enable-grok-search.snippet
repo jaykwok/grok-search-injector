@@ -1,0 +1,9 @@
+#!name=OpenRouter Grok Web Search
+#!desc=Quantumult X MITM 脚本：动态拦截 OpenRouter API 流量，为 Grok 请求自动注入 web_search 参数，触发原生搜索。
+#!author=Jay
+
+# 声明 MitM 域名，QX 会自动识别并将其加入到解密列表中
+hostname = openrouter.ai
+
+# 重写规则：匹配请求路径并触发 JS 脚本
+^https?:\/\/openrouter\.ai\/(api\/)?v1\/chat\/completions url script-request-body https://raw.githubusercontent.com/jaykwok/grok-search-injector/main/grok-search-injector.js
