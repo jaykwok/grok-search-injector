@@ -22,16 +22,12 @@ Ensure you have [Quantumult X](https://apps.apple.com/us/app/quantumult-x/id1443
 
 1.  Open Quantumult X, navigate to **Settings** -> **Rewrite** -> **Rewrite Rules** -> **Add**.  
     打开 Quantumult X，进入 **配置 (Settings)** -> **重写 (Rewrite)** -> **引用 (添加)**。
-2.  Paste the following **Raw URL** into the resource path:  
-    将下方的 **Raw 直链** 粘贴到资源路径/订阅地址中：
+2.  点击下面的链接进行安装配置
+   [![Add to Quantumult X](https://img.shields.io/badge/Quantumult%20X-一键导入重写规则-1e90ff?style=for-the-badge&logo=icloud)](https://quantumult.app/x/open-app/add-resource?remote-resource=%7B%22rewrite_remote%22%3A%5B%22https%3A%2F%2Fraw.githubusercontent.com%2Fjaykwok%2Fgrok-search-injector%2Fmain%2Fenable-grok-search.snippet%2C%20tag%3DGrok%20Search%20Injector%2C%20update-interval%3D86400%2C%20opt-parser%3Dfalse%2C%20enabled%3Dtrue%22%5D%7D)
 
-    ```url
-    [https://raw.githubusercontent.com/jaykwok/grok-search-injector/main/enable-grok-search.snippet](https://raw.githubusercontent.com/jaykwok/grok-search-injector/main/enable-grok-search.snippet)
-    ```
-
-3.  Enable the subscription and save.  
+4.  Enable the subscription and save.  
     开启该重写引用并保存配置。
-4.  Open your AI client, start a chat with any OpenRouter Grok model, and ask a real-time question (e.g., "Search X for today's top tech news") to verify the web search functionality.  
+5.  Open your AI client, start a chat with any OpenRouter Grok model, and ask a real-time question (e.g., "Search X for today's top tech news") to verify the web search functionality.  
     打开你的 AI 客户端，选择 OpenRouter 的 Grok 模型，询问一个强时效性的问题（例如：“搜索今天 X 平台上关于苹果的最新推文”），即可验证原生搜索是否被成功激活。
 
 ---
