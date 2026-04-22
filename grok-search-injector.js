@@ -4,31 +4,33 @@ if (body) {
     try {
         let obj = JSON.parse(body);
         
-        // 使用正则精准匹配模型名（忽略大小写），仅对 Grok 加自定义 body 参数
         if (obj.model && /grok/i.test(obj.model)) {
-            // 初始化 tools 数组
             obj.tools = obj.tools ||[];
             
-            // 检测是否已存在对应的 search tool
-            const hasWebSearch = obj.tools.some(t => t.type === 'web_search');
-            const hasXSearch = obj.tools.some(t => t.type === 'x_search');
+            // 检测是否已经存在搜索工具（兼容带前缀和不带前缀的写法）
+            const hasWebSearch = obj.tools.some(t => t.type === 'openrouter:web_search' || t.type === 'web_search');
+            const hasXSearch = obj.tools.some(t => t.type === 'openrouter:x_search' || t.type === 'x_search');
             
-            // 1. 注入web_search 到 tools 数组
+            // 1. 为 OpenRouter 注入通用网络搜索
             if (!hasWebSearch) {
-                obj.tools.push({ type: 'web_search' });
-                console.log("✅ 已成功为 Grok 请求注入 web_search 参数");
+                obj.tools.push({ type: 'openrouter:web_search' });
+                console.log("✅ 已成功为 OpenRouter 注入 openrouter:web_search");
             }
             
-            // 2. 注入 x_search 到 tools 数组
+            // 2. 为 OpenRouter 注入 X(Twitter) 原生搜索
             if (!hasXSearch) {
-                obj.tools.push({ type: 'x_search' });
-                console.log("✅ 已成功为 Grok 请求注入 x_search 参数");
+                obj.tools.push({ type: 'openrouter:x_search' });
+                console.log("✅ 已成功为 OpenRouter 注入 openrouter:x_search");
+                
+                // (可选) 注入高级参数：OpenRouter 要求挂载在根级的 x_search_filter 下
+                obj.x_search_filter = {
+                    enable_image_understanding: true,
+                    enable_video_understanding: true
+                };
             }
             
-            // 返回修改后的 Body
             $done({ body: JSON.stringify(obj) });
         } else {
-            // 非 Grok 模型直接放行
             $done({});
         }
     } catch (e) {
