@@ -4,7 +4,7 @@ if (body) {
     try {
         let obj = JSON.parse(body);
         
-        // 使用正则精准匹配模型名（忽略大小写），仅对 Grok 放行
+        // 使用正则精准匹配模型名（忽略大小写），仅对 Grok 加自定义body参数
         if (obj.model && /grok/i.test(obj.model)) {
             // 初始化 tools 数组
             obj.tools = obj.tools || [];
