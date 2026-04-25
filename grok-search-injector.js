@@ -1,3 +1,11 @@
+// ========= 新增：打印完整请求包 =========
+console.log("=== Full Request ===");
+console.log("URL: " + $request.url);
+console.log("Headers: " + JSON.stringify($request.headers));
+console.log("Body: " + ($request.body || "null"));
+console.log("====================");
+// ======================================
+
 let body = $request.body;
 if (body) {
     try {
@@ -8,12 +16,6 @@ if (body) {
             if (!hasWebSearch) {
                 obj.tools.push({ type: 'openrouter:web_search' });
                 console.log("Inject success: openrouter:web_search");
-            }
-            if (!obj.x_search_filter) {
-                obj.x_search_filter = {
-                    enable_image_understanding: false,
-                    enable_video_understanding: false
-                };
             }
             $done({ body: JSON.stringify(obj) });
         } else {
