@@ -10,7 +10,7 @@ if (body) {
             obj.tools = obj.tools || [];
             let searchFound = false;
             for (let i = 0; i < obj.tools.length; i++) {
-                if (obj.tools[i].type === 'web_search' || obj.tools[i].type === 'openrouter:web_search') {
+                if (obj.tools[i].type === 'web_search') {
                     obj.tools[i].type = 'web_search';
                     if (obj.tools[i].parameters) delete obj.tools[i].parameters;
                     obj.tools[i].max_results = 20;
