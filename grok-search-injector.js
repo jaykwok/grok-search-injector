@@ -11,22 +11,16 @@ if (body) {
             let searchFound = false;
             for (let i = 0; i < obj.tools.length; i++) {
                 if (obj.tools[i].type === 'web_search' || obj.tools[i].type === 'openrouter:web_search') {
-                    obj.tools[i].type = 'openrouter:web_search';
-                    obj.tools[i].parameters = obj.tools[i].parameters || {};
-                    obj.tools[i].parameters.max_results = 30;
-                    obj.tools[i].parameters.max_total_results = 30;
-                    obj.tools[i].parameters.search_context_size = "large";
+                    obj.tools[i].type = 'web_search';
+                    if (obj.tools[i].parameters) delete obj.tools[i].parameters;
+                    obj.tools[i].max_results = 20;
                     searchFound = true;
                 }
             }
             if (!searchFound) {
                 obj.tools.push({ 
-                    type: 'openrouter:web_search',
-                    parameters: {
-                        max_results: 30,
-                        max_total_results: 30,
-                        search_context_size: "large"
-                    }
+                    type: 'web_search',
+                    max_results: 20
                 });
             }
             
