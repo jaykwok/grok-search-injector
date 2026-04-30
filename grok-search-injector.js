@@ -1,9 +1,6 @@
-// ========= 打印完整请求包 =========
-console.log("=== Full Request ===");
+console.log("=== Original Request ===");
 console.log("URL: " + $request.url);
-console.log("Headers: " + JSON.stringify($request.headers));
 console.log("Body: " + ($request.body || "null"));
-console.log("====================");
 
 let body = $request.body;
 if (body) {
@@ -11,9 +8,26 @@ if (body) {
         let obj = JSON.parse(body);
         if (obj.model && /grok/i.test(obj.model)) {
             obj.tools = obj.tools || [];
-            if (!obj.tools.some(t => t.type === 'web_search')) {
-                obj.tools.push({ type: 'web_search' });
-                console.log("Inject success: web_search");
+            let searchFound = false;
+            for (let i = 0; i < obj.tools.length; i++) {
+                if (obj.tools[i].type === 'web_search' || obj.tools[i].type === 'openrouter:web_search') {
+                    obj.tools[i].type = 'openrouter:web_search';
+                    obj.tools[i].parameters = obj.tools[i].parameters || {};
+                    obj.tools[i].parameters.max_results = 30;
+                    obj.tools[i].parameters.max_total_results = 30;
+                    obj.tools[i].parameters.search_context_size = "large";
+                    searchFound = true;
+                }
+            }
+            if (!searchFound) {
+                obj.tools.push({ 
+                    type: 'openrouter:web_search',
+                    parameters: {
+                        max_results: 30,
+                        max_total_results: 30,
+                        search_context_size: "large"
+                    }
+                });
             }
             
             obj.reasoning = { effort: "high" };
@@ -23,8 +37,11 @@ if (body) {
                 obj.max_tokens = 16000;
             }
             
-            console.log("Inject success: web_search & thinking mode");
-            $done({ body: JSON.stringify(obj) });
+            let newBody = JSON.stringify(obj);
+            console.log("=== Modified Body ===");
+console.log(newBody);
+            
+            $done({ body: newBody });
         } else {
             $done({});
         }
