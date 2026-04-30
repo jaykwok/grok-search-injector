@@ -3,7 +3,7 @@
 #!author=Jay
 
 # 声明 MitM 域名，QX 会自动识别并将其加入到解密列表中
-hostname = openrouter.ai
+hostname = www.openclaudecode.cn
 
-# 重写规则：匹配请求路径并触发 JS 脚本
-^https?:\/\/openrouter\.ai\/(api\/)?v1\/chat\/completions url script-request-body https://raw.githubusercontent.com/jaykwok/grok-search-injector/main/grok-search-injector.js
+# 重写规则：拦截 /v1/responses 请求并触发 JS 脚本修改 Request Body
+^https?:\/\/www\.openclaudecode\.cn\/v1\/responses url script-request-body https://raw.githubusercontent.com/jaykwok/grok-search-injector/main/grok-search-injector.js
